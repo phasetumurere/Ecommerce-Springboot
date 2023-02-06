@@ -1,6 +1,7 @@
 package com.example.library.dto;
 
 import com.example.library.model.Category;
+import com.example.library.model.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -3,27 +3,15 @@
 <!-- Basic -->
 
 <head th:replace="fragments:: head"></head>
-
-
 <body>
 <!-- Start Main Top -->
-<div th:replace="fragments :: main_top">
-
-</div>
-<!-- End Main Top -->
-
+<div th:replace="fragments :: main_top"></div>
 <!-- Start Main Top -->
 <header th:replace="fragments :: header"></header>
-<!-- End Main Top -->
-
 <!-- Start Top Search -->
 <div th:replace="fragments :: top_search"></div>
-<!-- End Top Search -->
-
 <!-- Start Slider -->
 <div th:replace="fragments :: home_menu"></div>
-
-<!-- Start Shop Detail  -->
 <div class="shop-detail-box-main">
     <div class="container">
         <div class="row">
@@ -31,48 +19,17 @@
                 <div class="single-product-slider carousel slide" data-ride="carousel" id="carousel-example-1">
                     <div class="carousel-inner" role="listbox">
                         <div class="carousel-item active"><img alt="First slide" class="d-block w-100"
-                                                               src="images/Crab 04 - Soft Shell Crab Crostini With Arugula Butter.jpg">
-                        </div>
-                        <div class="carousel-item"><img alt="Second slide" class="d-block w-100"
-                                                        src="images/Crap Soft-Shell 02.jpg"></div>
-                        <div class="carousel-item"><img alt="Third slide" class="d-block w-100"
-                                                        src="images/Crab 04 - Soft Shell Crab Crostini With Arugula Butter.jpg">
+                                                               th:src="*{'data:image/jpeg;base64,'+{product.image}}">
                         </div>
                     </div>
-                    <a class="carousel-control-prev" data-slide="prev" href="#carousel-example-1" role="button">
-                        <i aria-hidden="true" class="fa fa-angle-left"></i>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" data-slide="next" href="#carousel-example-1" role="button">
-                        <i aria-hidden="true" class="fa fa-angle-right"></i>
-                        <span class="sr-only">Next</span>
-                    </a>
-                    <ol class="carousel-indicators">
-                        <li class="active" data-slide-to="0" data-target="#carousel-example-1">
-                            <img alt="" class="d-block w-100 img-fluid"
-                                 src="images/Crab 04 - Soft Shell Crab Crostini With Arugula Butter.jpg"/>
-                        </li>
-                        <li data-slide-to="1" data-target="#carousel-example-1">
-                            <img alt="" class="d-block w-100 img-fluid" src="images/Crap Soft-Shell 02.jpg"/>
-                        </li>
-                        <li data-slide-to="2" data-target="#carousel-example-1">
-                            <img alt="" class="d-block w-100 img-fluid"
-                                 src="images/Crab 04 - Soft Shell Crab Crostini With Arugula Butter.jpg"/>
-                        </li>
-                    </ol>
                 </div>
             </div>
             <div class="col-xl-7 col-lg-7 col-md-6">
                 <div class="single-product-details">
-                    <h2>Soft Shell Crab Crostini With Arugula Butter</h2>
-                    <h5>$30.75</h5>
+                    <h2 th:text="${product.name}"></h2>
+                    <h5 th:text="'$'+${product.sellPrice}"></h5>
                     <h4>Short Description:</h4>
-                    <p>The trick is to know when to take them off the heat. As soon as they turn from gray-brown to rust
-                        and white, the texture goes from soft to taut and they are ready.
-                        Soft-shell crabs don't need much adornment; a squirt of citrus and some freshly ground black
-                        pepper offset the funky sea flavor beautifully.
-                        But a little garlic and something green and sprightly (here, a combination of arugula and
-                        chives) can make them even better. </p>
+                    <p th:text="${product.description}"></p>
 
                     <div class="price-box-bar">
                         <div class="cart-and-bay-btn">
@@ -90,137 +47,44 @@
                 <h1>Related Products</h1>
             </div>
             <div class="featured-products-box owl-carousel owl-theme">
-                <div class="item">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <img alt="Image" class="img-fluid"
-                                 src="images/Crab 01 - Crab Pasta With Snap Peas and Mint.jpg">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a data-placement="right" data-toggle="tooltip" href="product-detail.html"
-                                           title="View"><i class="fas fa-eye"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
+                <div class="item" th:each="related : ${sameCategory}">
+                    <form method="post" th:action="@{/add_to_cart}">
+
+                        <div class="products-single fix">
+                            <div class="box-img-hover">
+                                <img class="img-fluid" src="" th:src="*{'data:image/jpeg;base64,'+{related.image}}">
+                                <div class="mask-icon">
+                                    <ul>
+                                        <li><a data-placement="right" data-toggle="tooltip"
+                                               th:href="@{'/product_details/'+${product.id}}"
+                                               title="View"><i class="fas fa-eye"></i></a></li>
+                                    </ul>
+                                    <input name="id" th:value="${related.id}" type="hidden">
+                                    <input type="submit" value="Add to Cart">
+                                </div>
+                            </div>
+                            <div class="why-text">
+                                <h4 th:text="${related.name}"></h4>
+                                <h5 th:text="${related.sellPrice}"></h5>
+                                <!--                        <h6 th:text="${product.category.name}"></h6>-->
                             </div>
                         </div>
-                        <div class="why-text">
-                            <h4>Crab Pasta With Snap Peas and Mint</h4>
-                            <h5> $50.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <img alt="Image" class="img-fluid" src="images/Crab 02 - Crab Toast.jpg">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a data-placement="right" data-toggle="tooltip" href="product-detail.html"
-                                           title="View"><i class="fas fa-eye"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Crab Toast</h4>
-                            <h5> $40.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <img alt="Image" class="img-fluid" src="images/Crab 03 - Crab and Shrimp Boil Pasta.jpg">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a data-placement="right" data-toggle="tooltip" href="product-detail.html"
-                                           title="View"><i class="fas fa-eye"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Crab and Shrimp Boil Pasta</h4>
-                            <h5> $40.50</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <img alt="Image" class="img-fluid" src="images/Crab 05 - Spacy Crab Dip.jpg">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a data-placement="right" data-toggle="tooltip" href="product-detail.html"
-                                           title="View"><i class="fas fa-eye"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Spacy Crab Dip</h4>
-                            <h5> $36.70</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <img alt="Image" class="img-fluid"
-                                 src="images/Crab 06 - Baked Crab Dip With Old Bay and Ritz Crackers.png">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a data-placement="right" data-toggle="tooltip" href="product-detail.html"
-                                           title="View"><i class="fas fa-eye"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Baked Crab Dip With Old Bay and Ritz Crackers</h4>
-                            <h5> $36.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="products-single fix">
-                        <div class="box-img-hover">
-                            <img alt="Image" class="img-fluid" src="images/Crab 07 - Easy Crab Recipes.jpg">
-                            <div class="mask-icon">
-                                <ul>
-                                    <li><a data-placement="right" data-toggle="tooltip" href="product-detail.html"
-                                           title="View"><i class="fas fa-eye"></i></a></li>
-                                </ul>
-                                <a class="cart" href="#">Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="why-text">
-                            <h4>Easy Crab Recipes</h4>
-                            <h5> $45.00</h5>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
+            <div class="owl-nav">
+
+            </div>
         </div>
+
     </div>
-
 </div>
-</div>
-<!-- End Cart -->
-
 <!-- Start Feed  -->
 <div th:replace="fragments:: instagram_box"></div>
-<!-- End Feed  -->
-
-
 <!-- Start Footer  -->
 <footer th:replace="fragments:: footer"></footer>
-
+<!-- Script Start-->
 <div th:replace="fragments:: scripts"></div>
-
-<!-- ALL JS FILES -->
-
-
 </body>
 
 </html>

@@ -39,7 +39,7 @@ public class ProductController {
     @GetMapping("/products/{pageNo}")
     public String productsPage(@PathVariable("pageNo") int pageNo, Model model, Principal principal) {
         if (principal == null) {
-            return "redirect/:login";
+            return "redirect:/login";
         }
         Page<ProductDto> products = productService.pageProducts(pageNo);
         model.addAttribute("title", "Products");

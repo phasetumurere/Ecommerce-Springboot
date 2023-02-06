@@ -1,5 +1,6 @@
 package com.example.library.service.impl;
 
+import com.example.library.dto.CategoryDto;
 import com.example.library.model.Category;
 import com.example.library.repository.CategoryRepository;
 import com.example.library.service.CategoryService;
@@ -72,5 +73,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> findAllByActivated() {
         return repository.findAllByActivated();
+    }
+
+    //    Customer
+    @Override
+    public List<CategoryDto> getCategoryAndProduct() {
+        return repository.getCategoryProduct();
     }
 }

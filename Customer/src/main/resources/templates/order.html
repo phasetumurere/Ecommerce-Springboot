@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org ">
+<!-- Basic -->
+
+<head th:replace="fragments:: head"></head>
+
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="fragments :: main_top">
+
+</div>
+<!-- End Main Top -->
+
+<!-- Start Main Top -->
+<header th:replace="fragments :: header"></header>
+<!-- End Main Top -->
+
+<!-- Start Top Search -->
+<div th:replace="fragments :: top_search"></div>
+<!-- End Top Search -->
+
+<!-- Start Slider -->
+<div th:replace="fragments :: home_menu"></div>
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th class="text-center">Product Name</th>
+                            <th class="text-center">Order Date</th>
+                            <th class="text-center">Delivery Date</th>
+                            <th class="text-center">Order Status</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-center">Total Price</th>
+                            <th class="text-center">Remove</th>
+                        </tr>
+                        </thead>
+
+                        <tbody th:each="details : ${orderDetails}">
+                        <tr th:each="order : ${orders}"
+                            th:if="${order.id == details.order.id}">
+                            <td class="text-center order-date">
+                                <span><b th:text="${details.product.name}">27-1-2022</b></span>
+                            </td>
+                            <td class="text-center order-date" th:if="${delivery != null}">
+                                <span><b th:text="${delivery}">27-1-2022</b></span>
+                            </td>
+                            <td class="text-center name-pr" th:if="${order.deliveryDate != null}">
+                                <p th:text="${order.deliveryDate}"></p>
+                            </td>
+                            <td class="text-center name-pr" th:if="${order.deliveryDate == null}">
+                                <p>Waiting...</p>
+                            </td>
+                            <td class="text-center price-pr" th:if="${delivery <= order.deliveryDate}">
+                                <p th:text="${order.Status}"></p>
+                            </td>
+                            <td class="text-center price-pr" th:if="${delivery > order.deliveryDate}">
+                                <p th:text="Delivered.."></p>
+                            </td>
+                            <td class="text-center price-pr">
+                                <p th:text="${details.quantity}"></p>
+                            </td>
+                            <td class="text-center total-pr">
+                                <p style="color: red" th:text="${order.totalPrice} + 'Rwf'">$ 80.0</p>
+                            </td>
+
+                            <td class="text-center">
+                                <a class="btn btn-warning" th:href="@{'/remove_order/'+${details.id}}">Remove</a>
+                                <a class="btn btn-primary" th:href="@{'/confirm_order/'+${order.id}}">Accept</a>
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+                    <a class="btn btn-primary btn-block" id="submitButton" th:href="@{/add_notification}">Confirm to
+                        make Order</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<div th:replace="fragments:: instagram_box"></div>
+<footer th:replace="fragments :: footer"></footer>
+<div th:replace="fragments:: scripts"></div>
+</body>
+
+</html>

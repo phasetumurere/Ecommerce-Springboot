@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org ">
+<!-- Basic -->
+
+<head th:replace="fragments:: head"></head>
+
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="fragments :: main_top"></div>
+>
+
+<!-- Start Main Top -->
+<header th:replace="fragments :: header"></header>
+
+<!-- Start Top Search -->
+<div th:replace="fragments :: top_search"></div>
+
+<!-- Start Slider -->
+<div th:replace="fragments :: home_menu"></div>
+<div class="container-fluid">
+
+
+    <div class="row">
+
+
+        <!--        <div class="col-lg-12">-->
+        <!--<div class="mainDiv">-->
+        <!--  <div class="cardStyle">-->
+
+        <form class="mx-auto d-block" id="signupForm" method="put" name="signupForm"
+              th:action="@{/update_info}" th:object="${customer}">
+            <div class="alert alert-warning" th:if="${error}">
+                <p class="text text-center" th:text="${error}"></p>
+            </div>
+            <h2 class="form-title text-center">
+                <i>Personal Information</i>
+            </h2>
+            <div class="form-group">
+                <label class="col-md-8 control-label" for="firstname">Firstname</label>
+                <div class="col-md-12">
+                    <input class="form-control input-md" id="firstname" name="firstname" required
+                           th:field="*{firstName}" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-8 control-label" for="lastname">Lastname</label>
+                <div class="col-md-12">
+                    <input class="form-control input-md" id="lastname" name="firstname" required
+                           th:field="*{lastName}" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-8 control-label" for="username">Username</label>
+                <div class="col-md-12">
+                    <input class="form-control input-md" id="username" name="username" required
+                           th:field="*{username}" type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-8 control-label" for="phone">Phone Number</label>
+                <div class="col-md-12">
+                    <input class="form-control input-md" id="phone" name="firstname" required th:field="*{phone}"
+                           type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-8 control-label" for="city">City</label>
+                <div class="col-md-12">
+                    <input class="form-control input-md" id="city" name="firstname" required th:field="*{city}"
+                           type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-8 control-label" for="address">Address</label>
+                <div class="col-md-12">
+                    <input class="form-control input-md" id="address" name="address" required th:field="*{address}"
+                           type="text">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-8 control-label" for="country">Country</label>
+                <div class="col-md-12">
+                    <input class="form-control input-md" id="country" name="address" required th:field="*{country}"
+                           type="text">
+                </div>
+            </div>
+            <div class="buttonWrapper">
+                <button class="btn btn-primary btn-block" id="submitButton" type="submit">Save</button>
+                <hr>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div th:replace="fragments:: instagram_box"></div>
+<footer th:replace="fragments :: footer"></footer>
+<div th:replace="fragments:: scripts"></div>
+</body>
+
+</html>

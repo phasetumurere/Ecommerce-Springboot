@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org ">
+<!-- Basic -->
+
+<head th:replace="fragments:: head"></head>
+
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="fragments :: main_top"></div>
+>
+
+<!-- Start Main Top -->
+<header th:replace="fragments :: header"></header>
+
+<!-- Start Top Search -->
+<div th:replace="fragments :: top_search"></div>
+
+<!-- Start Slider -->
+<div th:replace="fragments :: home_menu"></div>
+
+<div class="shop-box-inner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+                <div class="right-product-box">
+                    <div th:replace="fragments :: sort_products"></div>
+                    <div class="container " th:each=" category : ${categories}">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+                                <div class="title-all text-center">
+                                    <h1 th:text="${category.name}"></h1>
+                                    <p>Order of the Eggs that you may want!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="special-menu text-center">
+                                    <div class="button-group filter-button-group">
+                                        <button class="active" data-filter="*">All</button>
+                                        <button data-filter=".best-seller">Best seller</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row special-list">
+                            <div class="col-lg-3 col-md-6 special-grid" th:each="product : ${products}"
+                                 th:if="${product.category.name == category.name}">
+
+                                <form method="post" th:action="@{/add_to_cart}">
+
+                                    <div class="products-single fix">
+                                        <div class="box-img-hover">
+                                            <img class="img-fluid" src=""
+                                                 th:src="*{'data:image/jpeg;base64,'+{product.image}}">
+                                            <div class="mask-icon">
+                                                <ul>
+                                                    <li><a data-placement="right" data-toggle="tooltip"
+                                                           th:href="@{'/product_details/'+${product.id}}"
+                                                           title="View"><i class="fas fa-eye"></i></a></li>
+                                                </ul>
+                                                <input name="id" th:value="${product.id}" type="hidden">
+                                                <input type="submit" value="Add to Cart">
+                                            </div>
+                                        </div>
+                                        <div class="why-text">
+                                            <h4 th:text="${product.name}"></h4>
+                                            <h5 th:text="${product.sellPrice}+' Rwf'"></h5>
+                                            <!--                        <h6 th:text="${product.category.name}"></h6>-->
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <!--                                <div class="products-single fix">-->
+                                <!--                                    <div class="box-img-hover">-->
+                                <!--                                        <img class="img-fluid" src=""-->
+                                <!--                                             th:src="*{'data:image/jpeg;base64,'+{product.image}}">-->
+                                <!--                                        <div class="mask-icon">-->
+                                <!--                                            <ul>-->
+                                <!--                                                <li><a data-placement="right" data-toggle="tooltip"-->
+                                <!--                                                       th:href="@{'/product_detail/'+${product.id}}"-->
+                                <!--                                                       title="View"><i class="fas fa-eye"></i></a></li>-->
+                                <!--                                            </ul>-->
+                                <!--                                            <a class="cart" href="#">Add to Cart</a>-->
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="why-text">-->
+                                <!--                                        <h4 th:text="${product.name}"></h4>-->
+                                <!--                                        <h5 th:text="${product.sellPrice}"></h5>-->
+                                <!--&lt;!&ndash;                                        <h6 th:text="${product.category.name}"></h6>&ndash;&gt;-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+                <div class="product-category" th:fragment="nav_products">
+                    <div class="search-product">
+                        <form action="#">
+                            <input class="form-control" placeholder="Search here..." type="text">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                    <div class="filter-sidebar-left">
+                        <div class="title-left">
+                            <h3>Farmers we Work with</h3>
+                        </div>
+                        <div class="list-group list-group-collapse list-group-sm list-group-tree"
+                             data-children=".sub-men"
+                             id="list-group-men" th:each="categoryDto : ${categoryDtos}">
+                            <a class="list-group-item list-group-item-action"
+                               th:href="@{'products_in_category/'+${categoryDto.categoryId}}">[[${categoryDto.categoryName}]]
+                                <small
+                                        class="text-muted">([[${categoryDto.numberOfProducts}]])</small></a>
+                        </div>
+                    </div>
+                    <div class="filter-price-left">
+                        <div class="title-left">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="fragments:: instagram_box"></div>
+<footer th:replace="fragments :: footer"></footer>
+<div th:replace="fragments:: scripts"></div>
+</body>
+
+</html>

@@ -31,7 +31,7 @@
             <div class="col-lg-12">
                 <div class="title-all text-center">
                     <h1 th:text="${category.name}"></h1>
-                    <p>Have you a really good meal!</p>
+                    <p>Order of the Eggs that you may want!</p>
                 </div>
             </div>
         </div>
@@ -48,26 +48,30 @@
 
         <div class="row special-list">
             <div class="col-lg-3 col-md-6 special-grid" th:each="product : ${products}"
-                 th:if="${product.category.name == category.name}">
+                 th:if="${product.category.id == category.id}">
+                <form method="post" th:action="@{/add_to_cart}">
 
-
-                <div class="products-single fix">
-                    <div class="box-img-hover">
-                        <img class="img-fluid" src="" th:src="*{'data:image/jpeg;base64,'+{product.image}}">
-                        <div class="mask-icon">
-                            <ul>
-                                <li><a data-placement="right" data-toggle="tooltip" href="product-detail.html"
-                                       title="View"><i class="fas fa-eye"></i></a></li>
-                            </ul>
-                            <a class="cart" href="#">Add to Cart</a>
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <img class="img-fluid" src="" th:src="*{'data:image/jpeg;base64,'+{product.image}}">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a data-placement="right" data-toggle="tooltip"
+                                           th:href="@{'/product_details/'+${product.id}}"
+                                           title="View"><i class="fas fa-eye"></i></a></li>
+                                </ul>
+                                <input name="id" th:value="${product.id}" type="hidden">
+                                <input type="submit" value="Add to Cart">
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4 th:text="${product.name}"></h4>
+                            <h5 th:text="${product.sellPrice}+' Rwf'"></h5>
+                            <!--                        <h6 th:text="${product.category.name}"></h6>-->
                         </div>
                     </div>
-                    <div class="why-text">
-                        <h4 th:text="${product.name}"></h4>
-                        <h5 th:text="${product.costPrice}"></h5>
-                        <h6 th:text="${product.category.name}"></h6>
-                    </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>

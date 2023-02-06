@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service
 @Transactional
+
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository repository;
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> findAll() {
-        List<Product> products = repository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+        List<Product> products = repository.findAll();
         List<ProductDto> productDtoList = transfer(products);
         return productDtoList;
     }
@@ -194,4 +195,57 @@ public class ProductServiceImpl implements ProductService {
         return repository.listViewProduct();
     }
 
+    @Override
+    public ProductDto getProductById(Long id) {
+        Product product = repository.getById(id);
+        ProductDto productDto = new ProductDto();
+
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setImage(product.getImage());
+        productDto.setCostPrice(product.getCostPrice());
+        productDto.setCurrentQuantity(product.getCurrentQuantity());
+        productDto.setSellPrice(product.getSellPrice());
+        productDto.setCategory(product.getCategory());
+
+        return productDto;
+    }
+
+    @Override
+    public List<Product> similarCategory(Long cat_id) {
+        return repository.getRelatedCategory(cat_id);
+    }
+
+    @Override
+    public List<Product> getProductsInCategory(Long categoryId) {
+        return repository.productsInCategory(categoryId);
+    }
+
+    @Override
+    public List<Product> filterHighPrices() {
+        return repository.filterHighPrices();
+    }
+
+    @Override
+    public List<Product> filterLowPrices() {
+        return repository.filterLowPrices();
+    }
+
+    //    For Adding to cart purpose
+    public Product getCartProductById(Long id) {
+        Product product = repository.getById(id);
+        ProductDto productDto = new ProductDto();
+
+        productDto.setId(product.getId());
+        productDto.setName(product.getName());
+        productDto.setDescription(product.getDescription());
+        productDto.setImage(product.getImage());
+        productDto.setCostPrice(product.getCostPrice());
+        productDto.setCurrentQuantity(product.getCurrentQuantity());
+        productDto.setSellPrice(product.getSellPrice());
+        productDto.setCategory(product.getCategory());
+
+        return product;
+    }
 }

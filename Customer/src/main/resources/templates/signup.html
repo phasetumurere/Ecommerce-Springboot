@@ -1,59 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta contenteditable="width=device-width, initial-scale-1.0"
           name="viewport">
-    <title>SignUp</title>
+    <title th:text="${title}"></title>
     <link href="css/signup_css.css" rel="stylesheet">
+    <link href="/webjars/bootstrap/css/bootstrap.min.css"
+          rel="stylesheet"
+          type="text/css"/>
 </head>
 <body>
 
 <div class="container" id="container">
-    <div class="form-container sign-up-container">
-        <form action="${pageContext.request.contextPath}/view/register"
-              method="post">
-            <h1>Sign Up</h1>
-            <input name="fullName" placeholder="Username" type="text"/> <input
-                name="address" placeholder="Address" type="text"/> <input
-                name="phoneNumber" placeholder="Phone number" type="number"/> <input
-                name="email" placeholder="Example@gmail.com" type="text"/> <input
-                name="password" placeholder="Password" type="password"/> <input
-                name="repassword" placeholder="Confirm Password" type="password"/>
-
-            <button>Sign Up</button>
-        </form>
-    </div>
-    <div class="form-container sign-up-container-firstpage">
-        <form action="${pageContext.request.contextPath}/view/user/login" method="post">
-            <h3 style="color: red; font-weight: bold"></h3>
-            <h3 style="color: red; font-weight: bold">
-            </h3>
-            <h3 style="color: blue; font-weight: bold">
-            </h3>
-            <h1>Sign In</h1>
-            <span>Sign in with username and password</span> <input name="name"
-                                                                   placeholder="Username" type="text"/> <input
-                name="pass"
-                placeholder="Password" type="password"/>
-            <div>
-                <span style="color: Red; font-weight: bold"></span>
+    <div class="row">
+        <div class="form-container sign-up-container">
+            <div class="text-center" th:if="${message}">
+                <p class="alert alert-success" th:text="${message}"></p>
             </div>
-            <button>Sign in</button>
-
-        </form>
-    </div>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-left">
-                <h2>Welcome to ...</h2>
-
-                <button class="ghost" id="signIn">Sign In</button>
+            <div class="text-center" th:if="${warning}">
+                <p class="alert alert-warning" th:text="${warning}"></p>
             </div>
-            <div class="overlay-panel overlay-right">
-                <h2>Hello!</h2>
-                <p>If you dont't have account, please enter your personal details to start journey with me.</p>
-                <button class="ghost" id="signUp">Sign Up</button>
+            <div class="text-center" th:if="${danger}">
+                <p class="alert alert-warning" th:text="${danger}"></p>
+            </div>
+            <form method="post" th:action="@{/do_register}" th:object="${customerDto}">
+                <h1>Sign Up</h1>
+                <input name="first_name" placeholder="firstName" required th:field="*{firstName}" type="text"/>
+                <input name="last_name" placeholder="lastName" required th:field="*{lastName}" type="text"/>
+                <!--                <input name="phone"  th:field="*{phone}" placeholder="Phone Number" type="text" required/>-->
+                <!--                <input name="location" th:field="*{address}"    placeholder="Location" type="text" required/>-->
+                <input name="username" placeholder="enter Email Username" th:field="*{username}" type="email"/>
+                <input name="password" placeholder="Password" th:field="*{password}" type="password"/>
+                <input name="repassword" placeholder="Confirm Password" th:field="*{repeatPassword}" type="password"/>
+
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-up-container-firstpage">
+
+            <form method="post" th:action="@{/do_login}">
+                <h3 style="color: red; font-weight: bold"></h3>
+                <h3 style="color: red; font-weight: bold">
+                </h3>
+                <h3 style="color: blue; font-weight: bold">
+                </h3>
+                <div class="text-center alert alert-warning" th:if="${param.errors}">
+                    <p> Invalid username or password</p>
+                </div>
+                <div class="text-center alert alert-success" th:if="${param.logout}">
+                    <p> You have logged out</p>
+                </div>
+                <h1>Sign In</h1>
+                <span>Sign in with username and password</span>
+                <input name="username" placeholder="Username" type="text"/>
+                <input name="password" placeholder="Password" type="password"/>
+                <div>
+                    <span style="color: Red; font-weight: bold"></span>
+                </div>
+                <button type="submit">Sign in</button>
+
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h2>Welcome to ...</h2>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h2>Hello!</h2>
+                    <p>If you dont't have account, please enter your personal details to start Ordering the Eggs.</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
             </div>
         </div>
     </div>
@@ -76,10 +95,7 @@
                     container.classList.remove('right-panel-active');
                 });
 
-
 </script>
-</div>
-</div>
 
 </body>
 </html>

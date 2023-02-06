@@ -16,16 +16,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private Long id;
+    @Column(nullable = false)
     private String name;
     private String description;
-    @Column(name = "cost_price")
+    @Column(name = "cost_price", nullable = false)
     private Double costPrice;
-    @Column(name = "sell_price")
+    @Column(nullable = false, name = "sell_price")
     private Double sellPrice;
-    @Column(name = "current_quantity")
+    @Column(nullable = false, name = "current_quantity")
     private Integer currentQuantity;
     @Lob
-    @Column(columnDefinition = "MEDIUMBLOB")
+    @Column(nullable = false, length = 16777215)
     private String image;
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
