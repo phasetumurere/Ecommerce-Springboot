@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment :: header">
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="fragment :: side_bar"></ul><!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div class="d-flex flex-column" id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragment :: top_bar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12">
+
+                        <form class="form-horizontal" enctype="multipart/form-data" method="post"
+                              th:action="@{/save_product}" th:object="${produce}">
+                            <fieldset>
+
+                                <!-- Form Name -->
+                                <legend>PRODUCTS</legend>
+
+                                <input th:field="*{id}" type="hidden">
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>
+                                    <div class="col-md-4">
+                                        <input class="form-control input-md" id="product_name" name="product_name"
+                                               required="" th:field="*{name}" type="text">
+
+                                    </div>
+                                </div>
+                                <!-- Select Basic -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="product_categorie">PRODUCT
+                                        CATEGORY</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control" id="product_categorie" name="product_categorie"
+                                                th:field="*{category}">
+                                            <option th:value="null">SELECT</option>
+                                            <option
+                                                    th:each="category: ${categories}"
+                                                    th:text="${category.name}"
+                                                    th:value="${category.id}"
+                                            ></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Textarea -->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="cost_price">PRODUCT DESCRIPTION</label>
+                                    <div class="col-md-4">
+                                        <textarea class="form-control" id="cost_price" name="product_description"
+                                                  th:field="*{description}"></textarea>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="available_quantity">AVAILABLE
+                                        QUANTITY</label>
+                                    <div class="col-md-4">
+                                        <input class="form-control input-md" id="available_quantity"
+                                               name="available_quantity" required="" th:field="*{currentQuantity}"
+                                               type="text">
+
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <div class="col-md-4">
+
+                                        <!-- File Button -->
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="imageProduct">PRODUCT
+                                                IMAGE</label>
+                                            <img style="height:40px; width: 40px;"
+                                                 th:src="*{'data:image/jpeg;base64,'+{image}}">
+                                            <div class="col-md-4">
+                                                <input class="input-file" id="image" name="imageProduct" required
+                                                       type="file">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Text input-->
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="cost_price">COST PRICE</label>
+                                    <div class="col-md-4">
+                                        <input class="form-control input-md" id="cost_price" name="cost_price"
+                                               required="" th:field="*{costPrice}" type="number">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="sell_price">SELL PRICE</label>
+                                    <div class="col-md-4">
+                                        <input class="form-control input-md" id="sell_price" name="sell_price"
+                                               required="" th:field="*{sellPrice}" type="number">
+
+                                    </div>
+                                </div>
+                                <div class="form-footer">
+                                    <input class="btn btn-primary" th:value="${button}" type="submit">
+                                </div>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <footer th:replace="fragment :: footer"></footer>
+    </div>
+
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+
+
+    <!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a th:replace="fragment :: scroll"></a>
+
+<!--    ADD Category Model-->
+
+
+<!-- Logout Modal-->
+
+<div th:replace="fragment :: logoutModal"></div>
+
+<!-- Bootstrap core JavaScript-->
+
+<div th:replace="fragment :: script"></div>
+
+
+</body>
+
+</html>

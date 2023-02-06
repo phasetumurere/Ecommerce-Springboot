@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="db9aebf9-46e2-4e6d-976d-713cd8f75469" name="Ecommerce-Springboot" url="jdbc:postgresql://localhost/Ecommerce-Springboot" driverClass="org.postgresql.Driver" />
+      <data-source id="481e6ba2-0d4b-4ad8-8844-b359a80534dc" name="Ecommerce" url="jdbc:postgresql://localhost/Ecommerce-Springboot" driverClass="org.postgresql.Driver" />
+    </data-sources>
+  </component>
+</project>

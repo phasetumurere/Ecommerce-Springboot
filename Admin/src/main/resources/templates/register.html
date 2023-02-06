@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragment :: header">
+
+<body class="bg-gradient-primary">
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <div th:if="${message}">
+                            <p class="alert alert-warning" th:text="${message}"></p>
+                        </div>
+                        <form class="user" method="post" th:action="@{register_new}" th:object="${adminDto}">
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input class="form-control form-control-user" id="exampleFirstName"
+                                           placeholder="First Name"
+                                           th:field="*{firstName}" type="text">
+                                    <div class="alert alert-danger" th:errors="*{firstName}"
+                                         th:if="${#fields.hasErrors('firstName')}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <input class="form-control form-control-user" id="exampleLastName"
+                                           placeholder="Last Name"
+                                           th:field="*{lastName}" type="text">
+                                    <div class="alert alert-danger" th:errors="*{lastName}"
+                                         th:if="${#fields.hasErrors('lastName')}">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control form-control-user" id="exampleInputEmail"
+                                       placeholder="Email Username"
+                                       required th:field="*{username}" type="email">
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <input class="form-control form-control-user" id="exampleInputPassword"
+                                           placeholder="Password" th:field="*{password}" type="password">
+                                    <div class="alert alert-danger" th:errors="*{password}"
+                                         th:if="${#fields.hasErrors('password')}">
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input class="form-control form-control-user" id="exampleRepeatPassword"
+                                           placeholder="Repeat Password" th:field="*{repeatPassword}" type="password">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-user btn-block" type="submit">Register Account</button>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" th:href="@{/forgot-password}">Forgot Password?</a>
+                        </div>
+                        <div class="text-center">
+                            <a class="small" th:href="@{/login}">Already have an account? Login!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragment::script"></div>
+
+</body>
+
+</html>

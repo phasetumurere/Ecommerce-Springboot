@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org ">
+<!-- Basic -->
+
+<head th:replace="fragments:: head"></head>
+
+
+<body>
+<!-- Start Main Top -->
+<div th:replace="fragments :: main_top">
+
+</div>
+<!-- End Main Top -->
+
+<!-- Start Main Top -->
+<header th:replace="fragments :: header"></header>
+<!-- End Main Top -->
+
+<!-- Start Top Search -->
+<div th:replace="fragments :: top_search"></div>
+<!-- End Top Search -->
+
+<!-- Start Slider -->
+<div th:replace="fragments :: home_menu"></div>
+
+<!-- Start All Title Box -->
+
+<!-- End All Title Box -->
+
+<!-- Start Shop Page  -->
+<div class="shop-box-inner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
+                <div class="right-product-box">
+                    <div th:replace="fragments :: sort_products"></div>
+
+                    <div class="product-categorie-box">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="grid-view" role="tabpanel">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4" th:each="product : ${products}">
+                                        <div class="products-single fix">
+                                            <div class="box-img-hover">
+                                                <img class="img-fluid" src=""
+                                                     th:src="*{'data:image/jpeg;base64,'+{product.image}}">
+                                                <div class="mask-icon">
+                                                    <ul>
+                                                        <li><a data-placement="right" data-toggle="tooltip"
+                                                               th:href="@{/index}" title="View"><i
+                                                                class="fas fa-eye"></i></a></li>
+                                                    </ul>
+                                                    <a class="cart" href="#">Add to Cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="why-text">
+                                                <h4 th:text="${product.name}"></h4>
+                                                <h5 th:text="${product.sellPrice}"></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="list-view" role="tabpanel">
+                                <div class="list-view-box" th:each="list : ${listViewProduct}">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                            <div class="products-single fix">
+                                                <div class="box-img-hover">
+                                                    <img class="img-fluid" src=""
+                                                         th:src="*{'data:image/jpeg;base64,'+{list.image}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-6 col-lg-8 col-xl-8">
+                                            <div class="why-text full-width">
+                                                <h4 th:text="${list.name}"></h4>
+                                                <h5 th:text="${list.sellPrice}">$30.75</h5>
+                                                <p th:text="${list.description}"></p>
+                                                <a class="btn hvr-hover" href="#">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+                <div th:replace="fragments :: nav_products"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments:: instagram_box"></div>
+<footer th:replace="fragments :: footer"></footer>
+<div th:replace="fragments:: scripts"></div>
+</body>
+
+</html>

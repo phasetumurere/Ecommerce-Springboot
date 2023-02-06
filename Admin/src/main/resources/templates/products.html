@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment :: header">
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="fragment :: side_bar"></ul><!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div class="d-flex flex-column" id="content-wrapper">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="fragment :: top_bar"></nav>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+
+                <div class="row">
+
+
+                    <div class="col-lg-12">
+                        <div class="text-center" th:if="${size==0}">
+                            <p>No Product yet</p>
+                        </div>
+                        <div>
+                            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+                                  method="get"
+                                  th:action="@{/search_result/0}">
+                                <div class="input-group">
+                                    <input aria-describedby="basic-addon2" aria-label="Search"
+                                           class="form-control border-0 small"
+                                           name="keyword" placeholder="Search Product..." type="text">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <br>
+                        <div>
+                            <a class="btn btn-primary" th:href="@{/add_product}">Add Product</a>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="alert alert-success text-center" th:if="${success}">
+                                <p th:text="${success}"></p>
+                            </div>
+                            <div class="alert alert-danger text-center" th:if="${failed}">
+                                <p th:text="${failed}"></p>
+                            </div>
+                            <div class="alert alert-warning text-center" th:if="${setDelete}">
+                                <p th:text="${setDelete}"></p>
+                            </div>
+                            <div class="alert alert-success text-center" th:if="${setEnabled}">
+                                <p th:text="${setEnabled}"></p>
+                            </div>
+                            <div class="alert alert-danger text-center" th:if="${deleted}">
+                                <p th:text="${deleted}"></p>
+                            </div>
+
+                            <div class="table-responsive" th:if="${size>0}">
+
+                                <table cellspacing="0" class="table table-hover table-bordered" id="dataTable"
+                                       width="100%">
+                                    <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Cost Price</th>
+                                        <th scope="col">Sell Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Enabled</th>
+                                        <th scope="col">Update</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tfoot>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Category</th>
+                                        <th scope="col">Cost Price</th>
+                                        <th scope="col">Sell Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Enabled</th>
+                                        <th scope="col">Update</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <tr th:each="product: ${products}">
+                                        <th class="text-center" scope="row" th:text="${product.name}"></th>
+                                        <th class="text-center" scope="row" th:text="${product.category.name}"></th>
+                                        <th class="text-center" scope="row" th:text="${product.costPrice}"></th>
+                                        <th class="text-center" scope="row" th:text="${product.sellPrice}"></th>
+                                        <th class="text-center" scope="row" th:text="${product.currentQuantity}"></th>
+                                        <th class="text-center" scope="row"><img src="" style="height: 40px;"
+                                                                                 th:src="*{'data:image/jpeg;base64,'+{product.image}}">
+                                        </th>
+                                        <th class="text-center" scope="row" th:text="${product.is_activated}"></th>
+                                        <th class="text-center" scope="row"><a class="btn btn-primary"
+                                                                               th:href="@{'/update_product/'+${product.id}}">Update</a>
+                                        </th>
+                                        <th class="text-center" scope="row">
+                                            <a class="btn btn-warning" th:href="@{'/delete_product/'+${product.id}}">Disable</a>
+                                            <a class="btn btn-success" th:href="@{'/enable_product/'+${product.id}}">Enable</a>
+                                            <a class="btn btn-danger" th:href="@{'/remove_product/'+${product.id}}">Permanent
+                                                Delete</a></th>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <li class="page-item" th:if="${currentPage != 0}">
+                                            <a class="page-link"
+                                               th:href="@{'/products/' +${currentPage - 1}}">Previous</a>
+                                        </li>
+                                        <li class="page-item" th:classappend="${currentPage == i - 1? 'active' :'' }"
+                                            th:each="i : ${#numbers.sequence(1,totalPages)}">
+                                            <a class="page-link" th:href="@{'/products/' +${i - 1}}"><span
+                                                    th:text="${i}"></span></a>
+                                        </li>
+                                        <li class="page-item" th:if="${currentPage +1 != totalPages}">
+                                            <a class="page-link" th:href="@{'/products/' +${currentPage + 1}}">Next</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer th:replace="fragment :: footer"></footer>
+
+
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a th:replace="fragment :: scroll"></a>
+
+<!--    ADD Category Model-->
+
+
+<!-- Logout Modal-->
+
+<div th:replace="fragment :: logoutModal"></div>
+
+<!-- Bootstrap core JavaScript-->
+
+<div th:replace="fragment :: script"></div>
+
+
+</body>
+
+</html>
