@@ -114,7 +114,8 @@
                 </div>
                 <div class="col-12 d-flex shopping-box">
 
-                    <button class="btn hvr-hover btn btn-secondary" style="color: white;" type="reset">Cancel</button>
+                    <button class="btn  hvr-hover" onclick="cancelForm()" style="color: white;" type="button">Cancel
+                    </button>
                     <a class="ml-auto btn hvr-hover" th:href="@{/download_invoice}">Get The Invoice</a>
                 </div>
             </div>
@@ -126,6 +127,14 @@
 <div th:replace="fragments:: instagram_box"></div>
 <footer th:replace="fragments :: footer"></footer>
 <div th:replace="fragments:: scripts"></div>
+
+<script type="text/javascript">
+    function cancelForm() {
+    window.location = "[[@{/order
+    }]]";
+    }
+
+</script>
 </body>
 </html>
 </html>

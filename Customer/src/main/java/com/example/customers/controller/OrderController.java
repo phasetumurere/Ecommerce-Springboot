@@ -2,7 +2,7 @@ package com.example.customers.controller;
 
 import com.example.library.model.*;
 import com.example.library.service.CustomerService;
-import com.example.library.service.OrderService;
+import com.example.library.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -10,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +24,7 @@ public class OrderController {
     private CustomerService customerService;
 
     @Autowired
-    private OrderService orderService;
+    private OrderServiceImpl orderService;
 
     @GetMapping("/checkout")
     public String checkOut(Model model, Principal principal, HttpSession session) {
@@ -56,6 +54,46 @@ public class OrderController {
         }
         return "checkout";
     }
+
+    @GetMapping("add_notification")
+    public String notification(Model model, Principal principal) {
+        if (principal == null) {
+            return "redirect:/login";
+        }
+        String username = principal.getName();
+        Customer customer = customerService.findByUsername(username);
+        if (customer.getPhone() == null
+                || customer.getAddress() == null
+                || customer.getCity() == null
+                || customer.getCountry() == null) {
+            model.addAttribute("customer", customer);
+            model.addAttribute("error", "You must fill the information after checkout");
+            return "account";
+        } else {
+            model.addAttribute("customer", customer);
+
+            List<OrderDetails> orderDetails = customer.getOrderDetails();
+
+            model.addAttribute("details", orderDetails);
+
+            List<Order> orders = customer.getOrders();
+            List<Order> allOrders = customer.getOrders();
+            double totalPrices = orderService.sumAllPrices();
+            double tax = (totalPrices * 18) / 100;
+            double all = totalPrices + tax;
+
+            model.addAttribute("order", orders);
+            model.addAttribute("total", totalPrices);
+            model.addAttribute("tax", tax);
+            model.addAttribute("notification", orderService.orderNotification());
+            model.addAttribute("page", "Check Order");
+            model.addAttribute("title", "Check Order");
+
+        }
+
+        return "confirm_order";
+    }
+
 
     @RequestMapping(value = "/update_info", method = {RequestMethod.GET, RequestMethod.PUT})
     public String updateInformation(@ModelAttribute("customer") Customer customer,
@@ -128,45 +166,6 @@ public class OrderController {
         Customer customer = customerService.findByUsername(username);
         orderService.acceptOrder(order.getId());
         return "redirect:/order";
-    }
-
-    @GetMapping("add_notification")
-    public String notification(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/login";
-        }
-        String username = principal.getName();
-        Customer customer = customerService.findByUsername(username);
-        if (customer.getPhone() == null
-                || customer.getAddress() == null
-                || customer.getCity() == null
-                || customer.getCountry() == null) {
-            model.addAttribute("customer", customer);
-            model.addAttribute("error", "You must fill the information after checkout");
-            return "account";
-        } else {
-            model.addAttribute("customer", customer);
-
-            List<OrderDetails> orderDetails = customer.getOrderDetails();
-
-            model.addAttribute("details", orderDetails);
-
-            List<Order> orders = customer.getOrders();
-            List<Order> allOrders = customer.getOrders();
-            Double totalPrices = orderService.sumAllPrices();
-            Double tax = (totalPrices * 18) / 100;
-            Double all = totalPrices + tax;
-
-            model.addAttribute("order", orders);
-            model.addAttribute("total", totalPrices);
-            model.addAttribute("tax", tax);
-            model.addAttribute("notification", orderService.orderNotification());
-            model.addAttribute("page", "Check Order");
-            model.addAttribute("title", "Check Order");
-
-        }
-
-        return "confirm_order";
     }
 
     @GetMapping("/download_invoice")
